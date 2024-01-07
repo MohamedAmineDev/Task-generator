@@ -1,23 +1,13 @@
 import React from "react";
 import Item from "./Item";
 import MyModal from "./MyModal";
-function Panel() {
+function Panel({ tasks }) {
     const registerButtonModalName = "registerModal";
     const editButtonModalName = "editModal";
-    const [title, setTitle] = React.useState("");
-    const [description, setDescription] = React.useState("");
-    const [status, setStatus] = React.useState("");
-    const [task,setTask]=React.useState({ id: 0, title: 'title', description: 'Description', status: 'Done' });
-    function handleTitle(e) {
-        setTitle(e.target.value);
+    const [task, setTask] = React.useState({ id: 0, title: '', description: '', status: '' });
+    function handleTaskSelection(index){
+        setTask(tasks[index]);
     }
-    function handleDiscription(e) {
-        setDescription(e.target.value);
-    }
-    function handleStatus(e) {
-        setStatus(e.target.value);
-    }
-    //const [currentTask, setCurrentTask] = React.useState({ id: 0, title: 'title', description: 'Description', status: 'Done' });
     return (
         <>
             <div className="card">
@@ -36,12 +26,17 @@ function Panel() {
                             </tr>
                         </thead>
                         <tbody>
-                            <Item item={{ id: 0, title: 'title', description: 'Description', status: 'Done' }} editButtonModalName={editButtonModalName} />
+                            {tasks.map((task, index) => {
+                                return (
+                                    <Item key={index + 1} item={task} editButtonModalName={editButtonModalName} index={index} handleTaskSelection={handleTaskSelection} />
+                                );
+                            })}
+
                         </tbody>
                     </table>
                     <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target={`#${registerButtonModalName}`} >Register</button>
-                    <MyModal item={{ id: 0, title: 'title', description: 'Description', status: 'Done' }} modalId={registerButtonModalName} modalTitle={"Register new task"} buttonText={"Register"} handleTitle={handleTitle} handleDescription={handleDiscription} handleStatus={handleStatus} />
-                    <MyModal item={task} modalId={editButtonModalName} modalTitle={`Edit task`} buttonText={"Edit"} handleTitle={handleTitle} handleDescription={handleDiscription} handleStatus={handleStatus} />
+                    <MyModal task={task} modalId={registerButtonModalName} modalTitle={`Register task`} buttonText={"Register"}   />
+                    <MyModal task={task} modalId={editButtonModalName} modalTitle={`Edit task`} buttonText={"Edit"}   />
                 </div>
             </div>
         </>
