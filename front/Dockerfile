@@ -1,4 +1,5 @@
-FROM 20-alpine
+FROM node:20-alpine
+RUN npm clean-install
 COPY . .
 RUN npm install
 EXPOSE 5173
