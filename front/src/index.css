@@ -1,0 +1,5 @@
+.scrollable-element {
+    height: 300px; /* Set desired height */
+    overflow-y: auto; /* Enable vertical scrollbar if content exceeds the height */
+    /* You can also use 'overflow-x' for horizontal scrolling if needed */
+  }

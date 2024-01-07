@@ -1,31 +1,33 @@
 import React from "react";
 import axios from "axios";
-function MyModal({ task, modalTitle, buttonText, modalId }) {
-    const [title, setTitle] = React.useState(task.title || "");
-    const [description, setDescription] = React.useState(task.description || "");
-    const [status, setStatus] = React.useState(task.status || "");
+function MyModal({ task, modalTitle, buttonText, modalId, startLoading, globalUrl }) {
+    const [title, setTitle] = React.useState("");
+    const [description, setDescription] = React.useState("");
+    const [status, setStatus] = React.useState("");
     React.useEffect(() => {
         setTitle(task.title);
         setDescription(task.description);
         setStatus(task.status);
     }, [task]);
     async function handleRegisterTask() {
-        const url = "http://localhost:8088/api/register_task";
+        const url = `${globalUrl}/register_task`;
         const newTask = { title: title, description: description };
         try {
             const response = await axios.post(url, newTask);
             console.log(response.data);
+            startLoading();
         }
         catch (exception) {
             console.log(exception);
         }
     }
     async function handleEditTask() {
-        const url = `http://localhost:8088/api/edit_task/${task.id}`;
+        const url = `${globalUrl}/edit_task/${task.id}`;
         const editedTask = { id: task.id, title: title, description: description, status: status };
         try {
             const response = await axios.put(url, editedTask);
             console.log(response.data);
+            startLoading();
         }
         catch (exception) {
             console.log(exception);
@@ -68,14 +70,15 @@ function MyModal({ task, modalTitle, buttonText, modalId }) {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary" onClick={(e) => {
-                                e.preventDefault();
+                            <button type="button" className="btn btn-primary" data-bs-dismiss="modal" disabled={description == "" || title.lenght == ""} onClick={(e) => {
+                                //e.preventDefault();
                                 if (modalTitle.includes("Register")) {
                                     handleRegisterTask();
                                 }
                                 else {
                                     handleEditTask();
                                 }
+
                             }} >{buttonText}</button>
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"> Close </button>
                         </div>

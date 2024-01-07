@@ -1,8 +1,8 @@
 function Header() {
     return (
-        <>
-        <h1 className='header-title'>Manager your tasks</h1>
-        </>
+        <header>
+        <h1 className='text-center bg-dark text-white p-5'>Manager your tasks</h1>
+        </header>
     );
 }
 export default Header;

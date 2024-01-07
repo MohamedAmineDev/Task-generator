@@ -1,20 +1,22 @@
 import React from "react";
-import Item from "./Item";
+import Item from "./Task";
 import MyModal from "./MyModal";
-function Panel({ tasks }) {
+import Task from "./Task";
+function Panel({ tasks, fetchTasks,startLoading,globalUrl }) {
     const registerButtonModalName = "registerModal";
     const editButtonModalName = "editModal";
     const [task, setTask] = React.useState({ id: 0, title: '', description: '', status: '' });
-    function handleTaskSelection(index){
+    const [newTask, setNewTask] = React.useState({ id: 0, title: '', description: '', status: '' });
+    function handleTaskSelection(index) {
         setTask(tasks[index]);
     }
     return (
         <>
-            <div className="card">
+            <div className="card"  >
                 <div className="card-header fs-3">
                     Tasks
                 </div>
-                <div className="card-body">
+                <div className="card-body scrollable-element" >
                     <table className="table">
                         <thead>
                             <tr>
@@ -28,15 +30,15 @@ function Panel({ tasks }) {
                         <tbody>
                             {tasks.map((task, index) => {
                                 return (
-                                    <Item key={index + 1} item={task} editButtonModalName={editButtonModalName} index={index} handleTaskSelection={handleTaskSelection} />
+                                    <Task key={index + 1} task={task} editButtonModalName={editButtonModalName} index={index} handleTaskSelection={handleTaskSelection} startLoading={startLoading} globalUrl={globalUrl} />
                                 );
                             })}
 
                         </tbody>
                     </table>
                     <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target={`#${registerButtonModalName}`} >Register</button>
-                    <MyModal task={task} modalId={registerButtonModalName} modalTitle={`Register task`} buttonText={"Register"}   />
-                    <MyModal task={task} modalId={editButtonModalName} modalTitle={`Edit task`} buttonText={"Edit"}   />
+                    <MyModal task={newTask} modalId={registerButtonModalName} modalTitle={`Register task`} buttonText={"Register"} fetchTasks={fetchTasks} startLoading={startLoading} globalUrl={globalUrl}  />
+                    <MyModal task={task} modalId={editButtonModalName} modalTitle={`Edit task`} buttonText={"Edit"} fetchTasks={fetchTasks} startLoading={startLoading}  globalUrl={globalUrl} />
                 </div>
             </div>
         </>
