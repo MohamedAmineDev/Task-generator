@@ -3,7 +3,7 @@
 FROM node:latest
 COPY public public
 COPY src src
-COPY .env .env
+#COPY .env .env
 COPY .eslintrc.cjs .eslintrc.cjs
 COPY index.html index.html
 COPY package-lock.json package-lock.json
