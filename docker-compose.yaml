@@ -1,36 +1,41 @@
-version: '3'
+version: '3.7'
+
 services:
   mysql:
     image: mysql:5.7
     restart: always
     ports:
       - "3307:3306"
-    volumes: 
-     - mysql-data:/var/lib/mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: 123456789
-      MYSQL_USER: app-user
       MYSQL_DATABASE: db_task
+      MYSQL_USER: app-user
       MYSQL_PASSWORD: 123456789
 
   task-backend:
-    image: task-backend
+    image: task-backend-image
     restart: always
     ports:
       - "8088:8088"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/db_task
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql/db_task
       SPRING_DATASOURCE_USERNAME: app-user
       SPRING_DATASOURCE_PASSWORD: 123456789
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
     depends_on:
       - mysql
 
   task-frontend:
-    image: task-frontend
+    image: task-frontend-image
     restart: always
+    environment:
+      TASK_BACKEND_API_URL: http://task-backend/api
     ports:
       - "5173:5173"
     depends_on:
       - task-backend
+
 volumes:
   mysql-data:
