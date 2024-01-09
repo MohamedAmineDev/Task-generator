@@ -6,11 +6,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import Panel from './Components/Panel';
 import axios from "axios";
-const globalUrl=process.env.TASK_BACKEND_API_URL;
+//const globalUrl=process.env.TASK_BACKEND_API_URL;http://localhost:8088/api
+const globalUrl=import.meta.env.VITE_TASK_BACKEND_API_URL;
+//console.log(import.meta.env.VITE_TASK_BACKEND_API_URL);
 function App() {
   const [tasks, setTasks] = useState([]);
   const [isStarted,setIsStarted]=React.useState(true);
   const [isLoading,setIsLoading]=React.useState(false);
+  //const [globalUrl,setGlobalUrl]=React.useState();
   React.useEffect(()=>{
     if(isStarted){
       setIsLoading(true);
