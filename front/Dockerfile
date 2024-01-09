@@ -1,10 +1,10 @@
+# Use the official Node.js 20 Alpine image as the base
 FROM node:20-alpine
-COPY package-lock.json package-lock.json
-COPY package.json package.json
-COPY vite.config.js vite.config.js
-COPY index.html index.html
-COPY src /src
-COPY public /public
-COPY .eslintrc.cjs .eslintrc.cjs
+WORKDIR /app
+COPY package-lock.json package.json vite.config.js ./
+COPY index.html .eslintrc.cjs .env ./
 RUN npm install
-CMD ["npm","run","dev"]
+COPY src ./src
+COPY public ./public
+EXPOSE 3000
+CMD ["npm", "run", "dev"]

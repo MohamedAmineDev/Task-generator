@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import Panel from './Components/Panel';
 import axios from "axios";
-const globalUrl="http://task-backend/api";
+const globalUrl=process.env.TASK_BACKEND_API_URL;
 function App() {
   const [tasks, setTasks] = useState([]);
   const [isStarted,setIsStarted]=React.useState(true);
