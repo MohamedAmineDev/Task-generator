@@ -9,10 +9,10 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 123456789
-      MYSQL_DATABASE: db_task
-      MYSQL_USER: app-user
-      MYSQL_PASSWORD: 123456789
+      MYSQL_ROOT_PASSWORD: "123456789"  # Enclosed password in quotes for consistency
+      MYSQL_DATABASE: "db_task"         # Enclosed database name in quotes
+      MYSQL_USER: "app-user"            # Enclosed username in quotes
+      MYSQL_PASSWORD: "123456789"       # Enclosed password in quotes
 
   task-backend:
     image: task-backend-image
@@ -21,9 +21,9 @@ services:
       - "8088:8088"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql/db_task
-      SPRING_DATASOURCE_USERNAME: app-user
-      SPRING_DATASOURCE_PASSWORD: 123456789
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_DATASOURCE_USERNAME: "app-user"            # Enclosed username in quotes
+      SPRING_DATASOURCE_PASSWORD: "123456789"          # Enclosed password in quotes
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: "com.mysql.cj.jdbc.Driver"  # Enclosed driver class in quotes
     depends_on:
       - mysql
 
@@ -31,9 +31,9 @@ services:
     image: task-frontend-image
     restart: always
     environment:
-      VITE_TASK_BACKEND_API_URL: http://task-backend/api
+      VITE_TASK_BACKEND_API_URL: "http://task-backend:8088/api"  # Updated backend URL to include the port
     ports:
-      - "3000:5173"
+      - "5173:5173"
     depends_on:
       - task-backend
 
