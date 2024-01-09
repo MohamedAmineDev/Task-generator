@@ -1,6 +1,9 @@
 FROM node:20-alpine
-RUN npm clean-install
-COPY . .
+COPY package-lock.json package-lock.json
+COPY package.json package.json
+COPY src /src
+COPY public /public
+COPY index.html index.html
+COPY vite.config.js vite.config.js
 RUN npm install
-EXPOSE 5173
 CMD ["npm","run","dev"]
