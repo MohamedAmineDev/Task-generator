@@ -1,5 +1,6 @@
 FROM maven:3.9.6-eclipse-temurin-17
-COPY src src
+WORKDIR /webAppBackend
 COPY pom.xml .
+COPY src .
 RUN mvn clean install -DskipTests
 CMD ["java", "-jar", "target/Backend-0.0.1-SNAPSHOT.jar"]
