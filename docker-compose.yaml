@@ -31,7 +31,7 @@ services:
     image: task-frontend-image
     restart: always
     environment:
-      VITE_TASK_BACKEND_API_URL: "http://task-backend:8088/api"  # Updated backend URL to include the port
+      VITE_TASK_BACKEND_API_URL: "http://task-backend/api"  # Updated backend URL to include the port
     ports:
       - "5173:5173"
     depends_on:
