@@ -33,7 +33,7 @@ services:
     environment:
       VITE_TASK_BACKEND_API_URL: "http://task-backend/api"  # Updated backend URL to include the port
     ports:
-      - "5173:5173"
+      - "3000:3000"
     depends_on:
       - task-backend
 
