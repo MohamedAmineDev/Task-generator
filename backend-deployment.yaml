@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+      - name: backend-app
+        image: medaminebens/task-backend-image:latest
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://mysql-service:3306/db_task
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "app-user"
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "123456789"
+        ports:
+        - containerPort: 8088
