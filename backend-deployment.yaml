@@ -16,11 +16,20 @@ spec:
       - name: backend-app
         image: medaminebens/task-backend-image:latest
         env:
+        - name: CORS_ALLOWED_ORIGINS
+          value: "http://frontend-service:30000"
+        - name: CORS_ALLOWED_METHODS
+          value: "GET, POST, PUT, DELETE"
+        - name: CORS_ALLOWED_HEADERS
+          value: "Origin, Content-Type, Accept, Authorization"
+        - name: CORS_ALLOW_CREDENTIALS
+          value: "true"
         - name: SPRING_DATASOURCE_URL
           value: jdbc:mysql://mysql-service:3306/db_task
         - name: SPRING_DATASOURCE_USERNAME
           value: "app-user"
         - name: SPRING_DATASOURCE_PASSWORD
           value: "123456789"
+        
         ports:
         - containerPort: 8088
