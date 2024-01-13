@@ -17,6 +17,6 @@ spec:
         image: medaminebens/task-frontend-image:latest
         env:
         - name: VITE_TASK_BACKEND_API_URL
-          value: "http://backend-service:8088/api"
+          value: "http://localhost:8088/api"
         ports:
         - containerPort: 3000
