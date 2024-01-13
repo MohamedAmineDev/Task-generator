@@ -17,12 +17,12 @@ spec:
         image: mysql:5.7
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: "123456789"  # Enclosed in quotes
+          value: "123456789"
         - name: MYSQL_DATABASE
-          value: "db_task"    # Enclosed in quotes
+          value: "db_task"  
         - name: MYSQL_USER
-          value: "app-user"   # Enclosed in quotes
+          value: "app-user"
         - name: MYSQL_PASSWORD
-          value: "123456789"  # Enclosed in quotes
+          value: "123456789"
         ports:
         - containerPort: 3306
