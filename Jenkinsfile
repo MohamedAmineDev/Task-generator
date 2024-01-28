@@ -6,8 +6,8 @@ pipeline {
         }
         environment {
         // Define your Docker credentials
-        DOCKER_USERNAME = credentials('gitlabid')
-        DOCKER_PASSWORD = credentials('gitlabpassword')
+        DOCKER_USERNAME = credentials('dockerhubid')
+        DOCKER_PASSWORD = credentials('dockerhubpassword')
     }
     stages {
         stage("Clean up"){
@@ -17,7 +17,7 @@ pipeline {
     }
     stage("Clone repo"){
       steps{
-        sh "git clone https://gitlab.com/mohamedaminebensafta/Task-generator.git"
+        sh "git clone https://github.com/MohamedAmineDev/Task-generator.git"
       }
     }
     stage("Generate Task backend image"){
