@@ -2,7 +2,7 @@ pipeline {
     agent any
      tools{
         maven 'maven'
-        nodejs 'Nodejs'
+        nodejs 'nodejs'
         }
         environment {
         // Define your Docker credentials
