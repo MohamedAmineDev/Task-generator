@@ -28,7 +28,9 @@ pipeline {
         stage("Generate Task backend image") {
             steps {
                 script {
-                    docker.build("medaminebens/task-backend-image")
+                    dir("Task-generator/Backend"){
+                        docker.build("medaminebens/task-backend-image")
+                    }
                 }
             }
         }
@@ -36,7 +38,9 @@ pipeline {
         stage("Generate Task frontend image") {
             steps {
                 script {
-                    docker.build("medaminebens/task-frontend-image")
+                    dir("Task-generator/front"){
+                        docker.build("medaminebens/task-frontend-image")
+                    }
                 }
             }
         }
