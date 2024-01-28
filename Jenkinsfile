@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     dir("Task-generator/Backend"){
-                        docker.build("medaminebens/task-backend-image")
+                        docker.build("-t medaminebens/task-backend-image -f Dockerfile .")
                     }
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     dir("Task-generator/front"){
-                        docker.build("medaminebens/task-frontend-image")
+                        docker.build("-t medaminebens/task-frontend-image -f Dockerfile .")
                     }
                 }
             }
