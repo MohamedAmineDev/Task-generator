@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     dir("Task-generator/Backend"){
-                        docker.build("-t medaminebens/task_backend_image -f Dockerfile .")
+                        docker.build("-t medaminebens/task-backend-image -f Dockerfile .")
                     }
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     dir("Task-generator/front"){
-                        docker.build("-t medaminebens/task_frontend_image -f Dockerfile .")
+                        docker.build("-t medaminebens/task-frontend-image -f Dockerfile .")
                     }
                 }
             }
@@ -49,8 +49,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', DOCKER_USERNAME, DOCKER_PASSWORD) {
-                        docker.image("medaminebens/task_backend_image").push()
-                        docker.image("medaminebens/task_frontend_image").push()
+                        docker.image("medaminebens/task-backend-image").push()
+                        docker.image("medaminebens/task-frontend-image").push()
                     }
                 }
             }
