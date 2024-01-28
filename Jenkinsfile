@@ -1,59 +1,46 @@
 pipeline {
     agent any
-
-    tools {
+     tools{
         maven 'maven'
         nodejs 'nodejs'
-    }
-
-    environment {
+        }
+        environment {
         // Define your Docker credentials
         DOCKER_USERNAME = credentials('dockerhubid')
         DOCKER_PASSWORD = credentials('dockerhubpassword')
     }
-
     stages {
-        stage("Clean up") {
-            steps {
-                deleteDir()
-            }
+        stage("Clean up"){
+      steps{
+        deleteDir()
+      }
+    }
+    stage("Clone repo"){
+      steps{
+        checkout scm
+      }
+    }
+    stage("Generate Task backend image"){
+      steps{
+        dir("Task-generator/Backend"){
+          sh "docker build -t medaminebens/task-backend-image ."
         }
-
-        stage("Clone repo") {
-            steps {
-                checkout scm
-            }
+      }
+    }
+    stage("Generate Task frontend image"){
+      steps{
+        dir("Task-generator/front"){
+          sh "docker build -t medaminebens/task-frontend-image ."
         }
-
-        stage("Generate Task backend image") {
-            steps {
-                script {
-                    dir("Task-generator/Backend"){
-                        docker.build("-t medaminebens/task-backend-image -f Dockerfile .")
-                    }
-                }
-            }
-        }
-
-        stage("Generate Task frontend image") {
-            steps {
-                script {
-                    dir("Task-generator/front"){
-                        docker.build("-t medaminebens/task-frontend-image -f Dockerfile .")
-                    }
-                }
-            }
-        }
-
-        stage("Push the Task generator images") {
-            steps {
-                script {
-                    docker.withRegistry('', DOCKER_USERNAME, DOCKER_PASSWORD) {
-                        docker.image("medaminebens/task-backend-image").push()
-                        docker.image("medaminebens/task-frontend-image").push()
-                    }
-                }
-            }
-        }
+      }
+    }
+    stage("Push the Task generator images"){
+      steps{
+        sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+        sh "docker push medaminebens/task-backend-image:latest"
+        sh "docker push medaminebens/task-frontend-image:latest"
+      }
+    }
+        
     }
 }
