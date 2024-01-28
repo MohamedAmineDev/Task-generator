@@ -17,7 +17,7 @@ pipeline {
     }
     stage("Clone repo"){
       steps{
-        checkout scm
+        sh "git clone https://github.com/MohamedAmineDev/Task-generator.git"
       }
     }
     stage("Generate Task backend image"){
