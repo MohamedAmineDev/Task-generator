@@ -15,6 +15,15 @@ pipeline {
         deleteDir()
       }
     }
+        stage("Install docker"){
+      steps{
+           script {
+                    sh 'apt-get update'
+                    sh 'apt-get install -y docker.io'
+                    sh 'apt-get install -y docker compose'
+                }
+      }
+    }
     stage("Clone repo"){
       steps{
         sh "git clone https://github.com/MohamedAmineDev/Task-generator.git"
