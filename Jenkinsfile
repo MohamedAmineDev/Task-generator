@@ -10,7 +10,7 @@ pipeline {
         // Define your Docker credentials
         DOCKER_USERNAME = credentials('dockerhubid')
         DOCKER_PASSWORD = credentials('dockerhubpassword')
-        KUBE_CREDENTIALS_ID = 'kubernetes'
+        KUBE_CREDENTIALS_ID = 'Kube2'
     }
     
     stages {
