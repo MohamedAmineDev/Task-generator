@@ -52,10 +52,12 @@ pipeline {
         stage("Deploy to Kubernetes") {
             steps {
                 script {
-                     echo "Kube Config ID: ${params.kubeConfigId}" // Use the correct parameter name if it's not kubeConfigId
-            echo "Kube Config Path: ${params.kubeConfigPath}" // Print the path to kubeconfig file, if applicable
-
-            kubernetesDeploy(configs: "Task-generator/mysql-deployment.yaml", kubeConfigId: params.kubeConfigId)
+                    kubernetesDeploy(configs: "Task-generator/mysql-deployment.yaml", kubeConfigId: "kubernetes")
+                    kubernetesDeploy(configs: "Task-generator/mysql-service.yaml", kubeConfigId: "kubernetes")
+                    kubernetesDeploy(configs: "Task-generator/backend-deployment.yaml", kubeConfigId: "kubernetes")
+                    kubernetesDeploy(configs: "Task-generator/backend-service.yaml", kubeConfigId: "kubernetes")
+                    kubernetesDeploy(configs: "Task-generator/frontend-deployment.yaml", kubeConfigId: "kubernetes")
+                    kubernetesDeploy(configs: "Task-generator/frontend-service.yaml", kubeConfigId: "kubernetes")
                 }
             }
         }
