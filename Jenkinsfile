@@ -14,8 +14,6 @@ pipeline {
     }
     
     stages {
-        // ... (previous stages remain unchanged)
-
         stage("Deploy to Kubernetes") {
             steps {
                 script {
@@ -23,7 +21,7 @@ pipeline {
                         try {
                             kubernetesDeploy(
                                 configs: "Task-generator/mysql-deployment.yaml",
-                                kubeConfig: "${env.WORKSPACE}/$KUBECONFIG"
+                                kubeConfig: file("$KUBECONFIG").text
                             )
                         } catch (Exception e) {
                             // Handle deployment failure
