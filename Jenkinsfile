@@ -10,7 +10,7 @@ pipeline {
         // Define your Docker credentials
         DOCKER_USERNAME = credentials('dockerhubid')
         DOCKER_PASSWORD = credentials('dockerhubpassword')
-        KUBE_CREDENTIALS_ID = credentials('kubernetes')
+        KUBE_CREDENTIALS_ID = 'kubernetes'
     }
     
     stages {
@@ -44,25 +44,16 @@ pipeline {
 
         stage("Push the Task generator images") {
             steps {
-                script {
-                    docker.withRegistry('', DOCKER_USERNAME, DOCKER_PASSWORD) {
-                        docker.image("medaminebens/task-backend-image").push()
-                        docker.image("medaminebens/task-frontend-image").push()
-                    }
-                }
+                sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+                sh "docker push medaminebens/task-backend-image:latest"
+                sh "docker push medaminebens/task-frontend-image:latest"
             }
         }
 
         stage("Deploy to Kubernetes") {
             steps {
                 script {
-                    try {
-                        kubernetesDeploy(configs: "Task-generator/mysql-deployment.yaml", kubeConfigId: KUBE_CREDENTIALS_ID)
-                    } catch (Exception e) {
-                        // Handle deployment failure
-                        echo "Error deploying to Kubernetes: ${e.message}"
-                        currentBuild.result = 'FAILURE'
-                    }
+                    kubernetesDeploy(configs: "Task-generator/mysql-deployment.yaml", kubeConfigId: KUBE_CREDENTIALS_ID)
                 }
             }
         }
