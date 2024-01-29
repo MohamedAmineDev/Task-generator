@@ -53,7 +53,18 @@ pipeline {
         stage("Deploy to Kubernetes") {
             steps {
                 script {
-                    kubernetesDeploy(configs: "Task-generator/mysql-deployment.yaml", kubeConfigId: KUBE_CREDENTIALS_ID)
+                     withCredentials([file(credentialsId: KUBE_CREDENTIALS_ID, variable: 'KUBECONFIG')]) {
+                        try {
+                            kubernetesDeploy(
+                                configs: "Task-generator/mysql-deployment.yaml",
+                                kubeConfig: "${env.WORKSPACE}/$KUBECONFIG"
+                            )
+                        } catch (Exception e) {
+                            // Handle deployment failure
+                            echo "Error deploying to Kubernetes: ${e.message}"
+                            currentBuild.result = 'FAILURE'
+                        }
+                    }
                 }
             }
         }
