@@ -10,7 +10,7 @@ pipeline {
         // Define your Docker credentials
         DOCKER_USERNAME = credentials('dockerhubid')
         DOCKER_PASSWORD = credentials('dockerhubpassword')
-        KUBE_CREDENTIALS_ID = 'Kube2'
+        KUBE_CREDENTIALS_ID = credentials('dockerhubpassword')
     }
     
     stages {
@@ -52,10 +52,8 @@ pipeline {
 
         stage("Deploy to Kubernetes") {
             steps {
-                dir("Task-generator") {
-                    // Deploy using kubectl
-                    sh "kubectl apply -f mysql-deployment.yaml --kubeconfig=kubeconfig.yaml"
-                    // Add more deployment commands as needed
+                script {
+                    kubernetesDeploy(configs: "Task-generator/mysql-deployment.yaml", kubeConfigId: "Kub")
                 }
             }
         }
