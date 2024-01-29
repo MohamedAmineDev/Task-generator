@@ -54,8 +54,7 @@ pipeline {
             steps {
                 dir("Task-generator") {
                     // Deploy using kubectl
-                    def kubectl = tool 'Kubernetes'
-                    sh "${kubectl} apply -f mysql-deployment.yaml --kubeconfig=kubeconfig.yaml"
+                    sh "kubectl apply -f mysql-deployment.yaml --kubeconfig=kubeconfig.yaml"
                     // Add more deployment commands as needed
                 }
             }
