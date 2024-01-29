@@ -44,16 +44,25 @@ pipeline {
 
         stage("Push the Task generator images") {
             steps {
-                sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
-                sh "docker push medaminebens/task-backend-image:latest"
-                sh "docker push medaminebens/task-frontend-image:latest"
+                script {
+                    docker.withRegistry('', DOCKER_USERNAME, DOCKER_PASSWORD) {
+                        docker.image("medaminebens/task-backend-image").push()
+                        docker.image("medaminebens/task-frontend-image").push()
+                    }
+                }
             }
         }
 
         stage("Deploy to Kubernetes") {
             steps {
                 script {
-                    kubernetesDeploy(configs: "Task-generator/mysql-deployment.yaml", kubeConfigId: KUBE_CREDENTIALS_ID)
+                    try {
+                        kubernetesDeploy(configs: "Task-generator/mysql-deployment.yaml", kubeConfigId: KUBE_CREDENTIALS_ID)
+                    } catch (Exception e) {
+                        // Handle deployment failure
+                        echo "Error deploying to Kubernetes: ${e.message}"
+                        currentBuild.result = 'FAILURE'
+                    }
                 }
             }
         }
