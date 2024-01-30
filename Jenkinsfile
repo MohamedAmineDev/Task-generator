@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'Kubernetes'
-    }
+    agent any
     
     tools {
         maven 'maven'
