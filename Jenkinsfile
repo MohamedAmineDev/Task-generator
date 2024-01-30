@@ -65,12 +65,7 @@ pipeline {
                 script {
                     // Use script block to handle multiple commands and error handling
                     sshagent(['Ssh-agent']) {
-                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/mysql-deployment.yaml"
-                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/mysql-service.yaml"
-                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/backend-deployment.yaml"
-                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/backend-service.yaml"
-                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/frontend-deployment.yaml"
-                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/frontend-service.yaml"
+                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} ls"
                     }
                 }
             }
