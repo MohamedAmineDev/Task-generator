@@ -59,10 +59,8 @@ pipeline {
 
         stage("Deploy to Kubernetes") {
     steps {
-        echo "Deploying to Kubernetes..."
         script {
-                // Start the SSH agent and add the private key
-                sshagent(['Ssh-agent']) {
+                sshagent(['ssh-agent']) {
                     sh "echo ${ID}"
                     sh "ssh  -tt -o StrictHostKeyChecking=no kuber@${ID} ls"
                 }
