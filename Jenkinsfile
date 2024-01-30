@@ -62,7 +62,7 @@ pipeline {
                 // Replace with actual deployment commands
                 echo "Deploying to Kubernetes..."
                 sshagent(['Ssh-agent']){
-                    sh 'ssh -tt -o StrictHostKeyChecking=no kuber@10.0.2.15 kubectl apply -f your-deployment-file.yaml'
+                    sh 'ssh -tt -o StrictHostKeyChecking=no kuber@10.0.2.15 ls'
                 }
             }
         }
