@@ -61,12 +61,11 @@ pipeline {
     steps {
         echo "Deploying to Kubernetes..."
         script {
-            withCredentials([sshUserPrivateKey(credentialsId: 'Ssh-agent', keyFileVariable: 'SSH_KEY')]) {
                 // Start the SSH agent and add the private key
                 sshagent(['Ssh-agent']) {
-                    sh "ssh -i \$SSH_KEY -tt kuber@${ID} ls"
+                    sh "ssh  -tt kuber@${ID} ls"
                 }
-            }
+            
         }
     }
 }
