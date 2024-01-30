@@ -24,7 +24,7 @@ pipeline {
         stage("Clone repo") {
             steps {
                 // Clone the Git repository
-                checkout scm
+                sh "git clone https://github.com/MohamedAmineDev/Task-generator.git"
             }
         }
 
