@@ -63,7 +63,8 @@ pipeline {
         script {
                 // Start the SSH agent and add the private key
                 sshagent(['Ssh-agent']) {
-                    sh "ssh  -tt kuber@${ID} ls"
+                    sh "echo ${ID}"
+                    sh "ssh  -tt -o StrictHostKeyChecking=no kuber@${ID} ls"
                 }
             
         }
