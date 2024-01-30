@@ -15,12 +15,14 @@ pipeline {
     stages {
         stage("Clean up") {
             steps {
+                // Clean up the workspace directory
                 deleteDir()
             }
         }
 
         stage("Clone repo") {
             steps {
+                // Clone the Git repository
                 sh "git clone https://github.com/MohamedAmineDev/Task-generator.git"
             }
         }
@@ -28,6 +30,7 @@ pipeline {
         stage("Generate Task backend image") {
             steps {
                 dir("Task-generator/Backend") {
+                    // Build the Docker image for the backend
                     sh "docker build -t medaminebens/task-backend-image ."
                 }
             }
@@ -36,6 +39,7 @@ pipeline {
         stage("Generate Task frontend image") {
             steps {
                 dir("Task-generator/front") {
+                    // Build the Docker image for the frontend
                     sh "docker build -t medaminebens/task-frontend-image ."
                 }
             }
@@ -43,7 +47,10 @@ pipeline {
 
         stage("Push the Task generator images") {
             steps {
+                // Log in to Docker Hub
                 sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+
+                // Push backend and frontend Docker images to Docker Hub
                 sh "docker push medaminebens/task-backend-image:latest"
                 sh "docker push medaminebens/task-frontend-image:latest"
             }
@@ -51,13 +58,11 @@ pipeline {
 
         stage("Deploy to Kubernetes") {
             steps {
-                script {
-                    sh 'kubectl apply -f Task-generator/mysql-deployment.yaml'
-                    sh 'kubectl apply -f Task-generator/mysql-service.yaml'
-                    sh 'kubectl apply -f Task-generator/backend-deployment.yaml'
-                    sh 'kubectl apply -f Task-generator/backend-service.yaml'
-                    sh 'kubectl apply -f Task-generator/frontend-deployment.yaml'
-                    sh 'kubectl apply -f Task-generator/frontend-service.yaml'
+                // Placeholder for deploying to Kubernetes
+                // Replace with actual deployment commands
+                echo "Deploying to Kubernetes..."
+                sshagent(['Ssh-agent']){
+                    sh 'ssh -tt -o StrictHostKeyChecking=no kuber@10.0.2.15 kubectl apply -f your-deployment-file.yaml'
                 }
             }
         }
