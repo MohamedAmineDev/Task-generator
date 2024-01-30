@@ -53,7 +53,7 @@ pipeline {
             steps {
                 script {
                     kubernetesDeploy(
-                        kubeconfigId: 'Task-generator/KubeConfig1.yaml',
+                        kubeconfigId: 'Kub',
                         configs: 'Task-generator/mysql-deployment.yaml',
                         enableConfigSubstitution: true,
                         enableConfigMapSubstitution: true,
