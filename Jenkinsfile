@@ -52,7 +52,7 @@ pipeline {
         stage("Deploy to Kubernetes") {
             steps {
                 script {
-                    kubernetesDeploy(configs: "Task-generator/mysql-deployment.yaml", kubeConfigId: "Kub")
+                    sh "kubectl apply -f Task-generator/mysql-deployment.yaml --kubeconfig=kubeconfig1.yaml"
                 }
             }
         }
