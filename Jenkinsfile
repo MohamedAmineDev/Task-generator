@@ -58,17 +58,18 @@ pipeline {
         }
 
         stage("Deploy to Kubernetes") {
-            steps {
-                // Placeholder for deploying to Kubernetes
-                // Replace with actual deployment commands
-                echo "Deploying to Kubernetes..."
-                script {
-                    // Use script block to handle multiple commands and error handling
-                    sshagent(['Ssh-agent']) {
-                        sh "ssh -tt kuber@${ID} "
-                    }
+    steps {
+        echo "Deploying to Kubernetes..."
+        script {
+            withCredentials([sshUserPrivateKey(credentialsId: 'Ssh-agent', keyFileVariable: 'SSH_KEY')]) {
+                // Start the SSH agent and add the private key
+                sshagent(['Ssh-agent']) {
+                    sh "ssh -i \$SSH_KEY -tt kuber@${ID} ls"
                 }
             }
         }
+    }
+}
+
     }
 }
