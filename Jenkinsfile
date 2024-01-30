@@ -63,9 +63,10 @@ pipeline {
                 // Replace with actual deployment commands
                 echo "Deploying to Kubernetes..."
                 script {
-                   sshagent(['Ssh-agent']) {
-        sh "ssh -o StrictHostKeyChecking=no kuber@${ID} 'ls'"
-    }
+                    // Use script block to handle multiple commands and error handling
+                    sshagent(['Ssh-agent']) {
+                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} ls"
+                    }
                 }
             }
         }
