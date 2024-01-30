@@ -61,8 +61,12 @@ pipeline {
     steps {
         script {
                 sshagent(['ssh-agent']) {
-                    sh "echo ${ID}"
-                    sh "ssh  -tt -o StrictHostKeyChecking=no kuber@${ID} ls"
+                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/mysql-deployment.yaml"
+                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/mysql-service.yaml"
+                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/backend-deployment.yaml"
+                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/backend-service.yaml"
+                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/frontend-deployment.yaml"
+                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} kubectl apply -f Task-generator/frontend-service.yaml"
                 }
             
         }
