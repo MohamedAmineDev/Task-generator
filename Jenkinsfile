@@ -52,7 +52,15 @@ pipeline {
         stage("Deploy to Kubernetes") {
             steps {
                 script {
-                    kubernetesDeploy(configs: "Task-generator/mysql-deployment.yaml", kubeConfigId: "Kub2")
+                    kubernetesDeploy(
+                        kubeconfigId: 'Task-generator/KubeConfig1.yaml',
+                        configs: 'Task-generator/mysql-deployment.yaml',
+                        enableConfigSubstitution: true,
+                        enableConfigMapSubstitution: true,
+                        envSubstitution: true,
+                        secretSubstitution: true,
+                        verbose: true
+                    )
                 }
             }
         }
