@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'Kubernetes'
+    }
     
     tools {
         maven 'maven'
@@ -52,15 +54,7 @@ pipeline {
         stage("Deploy to Kubernetes") {
             steps {
                 script {
-                    kubernetesDeploy(
-                        kubeconfigId: 'Kub',
-                        configs: 'Task-generator/mysql-deployment.yaml',
-                        enableConfigSubstitution: true,
-                        enableConfigMapSubstitution: true,
-                        envSubstitution: true,
-                        secretSubstitution: true,
-                        verbose: true
-                    )
+                    sh 'kubectl apply -f Task-generator/mysql-deployment.yaml'
                 }
             }
         }
