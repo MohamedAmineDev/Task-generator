@@ -65,7 +65,7 @@ pipeline {
                 script {
                     // Use script block to handle multiple commands and error handling
                     sshagent(['Ssh-agent']) {
-                        sh "ssh -tt -o StrictHostKeyChecking=no kuber@${ID} ls"
+                        sh "ssh -tt kuber@${ID} "
                     }
                 }
             }
