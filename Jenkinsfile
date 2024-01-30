@@ -53,6 +53,11 @@ pipeline {
             steps {
                 script {
                     sh 'kubectl apply -f Task-generator/mysql-deployment.yaml'
+                    sh 'kubectl apply -f Task-generator/mysql-service.yaml'
+                    sh 'kubectl apply -f Task-generator/backend-deployment.yaml'
+                    sh 'kubectl apply -f Task-generator/backend-service.yaml'
+                    sh 'kubectl apply -f Task-generator/frontend-deployment.yaml'
+                    sh 'kubectl apply -f Task-generator/frontend-service.yaml'
                 }
             }
         }
